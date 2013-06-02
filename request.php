@@ -22,10 +22,6 @@
                 get_include_path())
             )
         );
-
-
-        
-
         
 
         if ($token = $_POST['paymillToken']) {
