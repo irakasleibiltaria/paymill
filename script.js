@@ -31,11 +31,11 @@
               }
 
               // to test in real
-              if (false == paymill.validateExpiry($('.card-holdername').val())) {
-                  $(".payment-errors").text("Invalid card holdername");
-                  $(".submit-button").removeAttr("disabled");
-                  return false;
-              }
+              // if (false == paymill.validateExpiry($('.card-holdername').val())) {
+              //     $(".payment-errors").text("Invalid card holdername");
+              //     $(".submit-button").removeAttr("disabled");
+              //     return false;
+              // }
 
               paymenttype = $('.paymenttype.disabled').length ? $('.paymenttype.disabled').val() : 'cc';
               switch (paymenttype) {
@@ -60,7 +60,51 @@
                       };
                       break;
               }
+              /*
+              3-D secured customization
+              https://www.paymill.com/en-gb/documentation-3/reference/paymill-bridge/
+              http://stackoverflow.com/questions/15031505/paymill-3d-secure-bug-with-at-least-one-bank
+              */
               paymill.createToken(params, PaymillResponseHandler);
+
+              /*
+              var tdsInit = function tdsInit(redirect, cancelCallback) {
+                  var url = redirect.url, params = redirect.params;
+                  var body = document.body || document.getElementsByTagName('body')[0];
+
+                  var iframe = document.createElement('iframe');
+                  body.insertBefore(iframe, body.firstChild);
+
+                  var iframeDoc = iframe.contentWindow || iframe.contentDocument;
+                  if (iframeDoc.document) iframeDoc = iframeDoc.document;
+
+                  var form = iframeDoc.createElement('form');
+                  form.method = 'post';
+                  form.action = url;
+
+                  for (var k in params) {
+                      var input = iframeDoc.createElement('input');
+                      input.type = 'hidden';
+                      input.name = k;
+                      input.value = decodeURIComponent(params[k]);
+                      form.appendChild(input);
+                  }
+
+                  if (iframeDoc.body) iframeDoc.body.appendChild(form);
+                  else iframeDoc.appendChild(form);
+
+                  form.submit();
+              };
+
+              var tdsCleanup = function tdsCleanup(redirect, cancelCallback) {
+                // ??
+              };
+
+              paymill.createToken(params, PaymillResponseHandler, tdsInit, tdsCleanup);
+              */
+
+              // change the "cancel" button label of the 3-D iframe
+              paymill.config('3ds_cancel_label', 'atzera');
 
               return false;
           });
