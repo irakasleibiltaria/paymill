@@ -30,6 +30,13 @@
                   return false;
               }
 
+              // to test in real
+              if (false == paymill.validateExpiry($('.card-holdername').val())) {
+                  $(".payment-errors").text("Invalid card holdername");
+                  $(".submit-button").removeAttr("disabled");
+                  return false;
+              }
+
               paymenttype = $('.paymenttype.disabled').length ? $('.paymenttype.disabled').val() : 'cc';
               switch (paymenttype) {
                   case "cc":
@@ -41,7 +48,7 @@
                           exp_month:      $('.card-expiry-month').val(),
                           exp_year:       $('.card-expiry-year').val(),
                           cvc:            $('.card-cvc').val(),
-                          cardholdername: $('.card-holdername').val()
+                          cardholdername: $('.card-holdername').val()  // optional
                       };
                       break;
 
@@ -67,7 +74,7 @@
                   $('#btn-paymenttype-elv').removeClass('btn-primary disabled');
               }
               else {
-                  $('#btn-paymenttype-cc').removeClass('btn-primary disabled');                  
+                  $('#btn-paymenttype-cc').removeClass('btn-primary disabled');
               }
           });
       });
